@@ -27,10 +27,12 @@ def read_space_objects_data_from_file(input_filename):
                 planet = Planet()
                 parse_planet_parameters(line, planet)
                 objects.append(planet)
+            if object_type == "dt":
+                time_step = float(line.split()[1].lower())
             else:
-                print("Unknown space object")
+                pass
 
-    return objects
+    return objects, time_step
 
 
 def parse_star_parameters(line, star):

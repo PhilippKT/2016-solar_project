@@ -34,10 +34,10 @@ def execution():
     """
     global physical_time
     global displayed_time
-    recalculate_space_objects_positions(space_objects, time_step.get())
+    recalculate_space_objects_positions(space_objects, time_step)
     for body in space_objects:
         update_object_position(space, body)
-    physical_time += time_step.get()
+    physical_time += time_step
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
     if perform_execution:
@@ -75,11 +75,13 @@ def open_file_dialog():
     """
     global space_objects
     global perform_execution
+    global time_step
     perform_execution = False
     for obj in space_objects:
         space.delete(obj.image)  # удаление старых изображений планет
     in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
-    space_objects = read_space_objects_data_from_file(in_filename)
+    space_objects = read_space_objects_data_from_file(in_filename)[0]
+    time_step = read_space_objects_data_from_file(in_filename)[1]
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
     
@@ -107,7 +109,6 @@ def main():
     """
     global physical_time
     global displayed_time
-    global time_step
     global time_speed
     global space
     global start_button
@@ -126,19 +127,12 @@ def main():
     start_button = tkinter.Button(frame, text="Start", command=start_execution, width=6)
     start_button.pack(side=tkinter.LEFT)
 
-    time_step = tkinter.DoubleVar()
-    time_step.set(86400)
-    time_step_entry = tkinter.Entry(frame, textvariable=time_step)
-    time_step_entry.pack(side=tkinter.LEFT)
-
     time_speed = tkinter.DoubleVar()
     scale = tkinter.Scale(frame, variable=time_speed, orient=tkinter.HORIZONTAL)
     scale.pack(side=tkinter.LEFT)
 
     load_file_button = tkinter.Button(frame, text="Open file...", command=open_file_dialog)
     load_file_button.pack(side=tkinter.LEFT)
-    save_file_button = tkinter.Button(frame, text="Save to file...", command=save_file_dialog)
-    save_file_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
     displayed_time.set(str(physical_time) + " seconds gone")
