@@ -94,7 +94,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     strings = ["#Солнечная система", "# Меркурий", "# Венера", "# Земля", 
                "# Марс", "# Юпитер", "# Сатурн", "# Уран", "# Нептун"]
     with open(output_filename, 'w') as out_file:
-        for i in range(9):
+        for i in range(len(space_objects)):
                 print(strings[i], end = '\n', file = out_file)
                 print(space_objects[i].type, space_objects[i].R, 
                       space_objects[i].color, space_objects[i].m, 
