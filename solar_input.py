@@ -93,11 +93,10 @@ def write_space_objects_data_to_file(output_filename, space_objects,
 
     **output_filename** — имя входного файла
     **space_objects** — список объектов планет и звёзд
+    **time_step** — шаг времени для данной системы
     """
-    strings = ["#Солнечная система", "# Меркурий", "# Венера", "# Земля", 
-               "# Марс", "# Юпитер", "# Сатурн", "# Уран", "# Нептун"]
+    
     with open(output_filename, 'w') as out_file:
-        print(strings[0], end = '\n', file = out_file)
         print(space_objects[0].type, space_objects[0].R, 
               space_objects[0].color, space_objects[0].m, 
               space_objects[0].x, space_objects[0].y,
@@ -110,7 +109,6 @@ def write_space_objects_data_to_file(output_filename, space_objects,
         print(end = '\n', file = out_file)
 
         for i in range(len(space_objects) - 1):
-                print(strings[i + 1], end = '\n', file = out_file)
                 print(space_objects[i + 1].type, space_objects[i + 1].R, 
                       space_objects[i + 1].color, space_objects[i + 1].m, 
                       space_objects[i + 1].x, space_objects[i + 1].y,
@@ -118,7 +116,6 @@ def write_space_objects_data_to_file(output_filename, space_objects,
                       end = '\n', file = out_file)
                 print(end = '\n', file = out_file)
 
-# FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
