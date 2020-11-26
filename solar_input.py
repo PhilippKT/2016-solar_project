@@ -82,7 +82,8 @@ def parse_planet_parameters(line, planet):
     planet.Vy = float(line.split()[7].lower())
 
 
-def write_space_objects_data_to_file(output_filename, space_objects):
+def write_space_objects_data_to_file(output_filename, space_objects,
+                                     time_step):
     """Сохраняет данные о космических объектах в файл.
     Строки должны иметь следующий формат:
     Star <радиус в пикселах> <цвет> <масса> <x> <y> <Vx> <Vy>
@@ -96,13 +97,25 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     strings = ["#Солнечная система", "# Меркурий", "# Венера", "# Земля", 
                "# Марс", "# Юпитер", "# Сатурн", "# Уран", "# Нептун"]
     with open(output_filename, 'w') as out_file:
-        for i in range(len(space_objects)):
-                print(strings[i], end = '\n', file = out_file)
-                print(space_objects[i].type, space_objects[i].R, 
-                      space_objects[i].color, space_objects[i].m, 
-                      space_objects[i].x, space_objects[i].y,
-                      space_objects[i].Vx, space_objects[i].Vy, end = '\n', 
-                      file = out_file)
+        print(strings[0], end = '\n', file = out_file)
+        print(space_objects[0].type, space_objects[0].R, 
+              space_objects[0].color, space_objects[0].m, 
+              space_objects[0].x, space_objects[0].y,
+              space_objects[0].Vx, space_objects[0].Vy, 
+              end = '\n', file = out_file)
+        print(end = '\n', file = out_file)
+        
+        print("# dt", end = '\n', file = out_file)
+        print("dt", time_step, end = '\n', file = out_file)
+        print(end = '\n', file = out_file)
+
+        for i in range(len(space_objects) - 1):
+                print(strings[i + 1], end = '\n', file = out_file)
+                print(space_objects[i + 1].type, space_objects[i + 1].R, 
+                      space_objects[i + 1].color, space_objects[i + 1].m, 
+                      space_objects[i + 1].x, space_objects[i + 1].y,
+                      space_objects[i + 1].Vx, space_objects[i + 1].Vy, 
+                      end = '\n', file = out_file)
                 print(end = '\n', file = out_file)
 
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
